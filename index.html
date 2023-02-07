@@ -25,22 +25,13 @@
             } while (currentDate - date < milliseconds);
         }
 
-        function update() {
-            for (var i = 1; i <= 9; i++) {
-                var temp = generateRandomLetter();
-                console.log(temp);
-                $('#' + i).text(temp);
-            }
-
-
-        }
-
         $(document).ready(function () {
             console.log("ready!");
             $('#bt').click(function () {
-                for (var j = 0; j <= 5; j++) {
-                    update();
-                    console.log(j);
+                for (var i = 1; i <= 9; i++) {
+                    var temp = generateRandomLetter();
+                    console.log(temp);
+                    $('#' + i).text(temp);
                 }
             });
         });
