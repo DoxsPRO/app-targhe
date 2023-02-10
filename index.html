@@ -11,28 +11,66 @@
         integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
+
+        var timerId;
+        var downloadTimer;
+
         function generateRandomLetter() {
             const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
             return alphabet[Math.floor(Math.random() * alphabet.length)]
         }
 
-        function sleep(milliseconds) {
-            const date = Date.now();
-            let currentDate = null;
-            do {
-                currentDate = Date.now();
-            } while (currentDate - date < milliseconds);
+        function timer() {
+            var timeleft = 10;
+            downloadTimer = setInterval(function () {
+                if (timeleft <= 0) {
+                    console.log("pulito timer");
+                    clearInterval(downloadTimer);
+                }
+                $('#tm').text(timeleft);
+                timeleft -= 1;
+            }, 1000);
+        }
+
+        function pulisci() {
+            for (var i = 1; i <= 9; i++) {
+                $('#' + i).text('\xa0');
+            }
+        }
+
+        function genMatrice() {
+            for (var i = 1; i <= 9; i++) {
+                var temp = generateRandomLetter();
+                console.log(temp);
+                $('#' + i).text(temp);
+            }
+            setTimeout(pulisci, 1000);
+            clearInterval(downloadTimer)
+            timer();
+        }
+
+        function start() {
+            timer();
+            timerId = setInterval(() => genMatrice(), 11000);
+        }
+
+        function stop() {
+            clearInterval(timerId);
+            clearInterval(downloadTimer);
+            $('#tm').text('\xa0');
+            console.log('stop');
         }
 
         $(document).ready(function () {
             console.log("ready!");
             $('#bt').click(function () {
-                for (var i = 1; i <= 9; i++) {
-                    var temp = generateRandomLetter();
-                    console.log(temp);
-                    $('#' + i).text(temp);
-                }
+                $('#bt').prop("disabled",true)
+                start();
+            });
+            $('#bt2').click(function () {
+                stop();
+                $('#bt').prop("disabled",false)
             });
         });
     </script>
@@ -63,6 +101,12 @@
                 <div class="row">
                     <div class="col">
                         <button id="bt">Inizia</button>
+                        <button id="bt2">Stop</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>La prossima casella verà mostrata tra:<span id="tm" class="text-danger"></span></p>
                     </div>
                 </div>
             </div>
