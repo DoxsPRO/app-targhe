@@ -10,6 +10,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
         integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.5.1/math.js"
+        integrity="sha512-gIaHF8pKynuRYPvDDLkS6Gj6dS+tpE4khy3CwBIwyKxK3rOJ+LXFGM97BoZh5xtGnGSIky6TJqxfAZcGA8DN3Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
 
         var timerId;
@@ -40,11 +43,26 @@
         }
 
         function genMatrice() {
+
+            var res = new Array();
+
+            res[0] = new Array();
+            res[1] = new Array();
+            res[2] = new Array();
+
             for (var i = 1; i <= 9; i++) {
                 var temp = generateRandomLetter();
-                console.log(temp);
+                //console.log(temp);
                 $('#' + i).text(temp);
+                if (i <= 3) {
+                    res[0][i] = temp;
+                } else if (i <= 6) {
+                    res[1][i] = temp;
+                } else {
+                    res[2][i] = temp;
+                }
             }
+            console.log(res);
             setTimeout(pulisci, 1000);
             clearInterval(downloadTimer)
             timer();
@@ -65,12 +83,12 @@
         $(document).ready(function () {
             console.log("ready!");
             $('#bt').click(function () {
-                $('#bt').prop("disabled",true)
+                $('#bt').prop("disabled", true)
                 start();
             });
             $('#bt2').click(function () {
                 stop();
-                $('#bt').prop("disabled",false)
+                $('#bt').prop("disabled", false)
             });
         });
     </script>
